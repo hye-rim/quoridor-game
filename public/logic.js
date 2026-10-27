@@ -183,7 +183,7 @@ function minimax(st, depth, alpha, beta, me, k, ctx) {
   }
   return best;
 }
-// level 'easy': 대체로 가장 짧은 길로 걷고 벽은 가끔만 놓는다 (실수도 한다) / 'hard': 시간(기본 600ms) 안에서 깊이를 늘려 가며(최대 4수) 본다
+// level 'easy': 대체로 가장 짧은 길로 걷고 벽은 가끔만 놓는다 (실수도 한다) / 'hard': 시간(기본 600ms) 안에서 깊이를 늘려 가며(최대 2수, 사람이 이길 만하게 예전 4수에서 낮춤) 본다
 // opts.depth 를 주면 시간 대신 그 깊이로 고정 (시험용)
 function aiPick(st, level, rand = Math.random, opts = {}) {
   const me = st.turn;
@@ -207,7 +207,7 @@ function aiPick(st, level, rand = Math.random, opts = {}) {
     if (rand() < 0.12) { const m = moves[Math.floor(rand() * moves.length)]; return { type: 'move', r: m.r, c: m.c }; }   // 가끔 엉뚱한 칸
     return { type: 'move', r: stepTo.r, c: stepTo.c };
   }
-  const maxDepth = opts.depth || 4, budget = opts.depth ? 0 : (opts.ms || 600);
+  const maxDepth = opts.depth || 2, budget = opts.depth ? 0 : (opts.ms || 600);
   const root = candidates(st, 10);
   let best = { type: 'move', r: stepTo.r, c: stepTo.c };
   const startAt = Date.now();
